@@ -11,14 +11,6 @@ class Individual {
         created_at: new Date()
     }
 
-    getUsers() {
-        const arrIndividuals = [
-            { name: 'Dieison', age: 14 },
-            { name: 'Jonathan', age: 14.001 }
-        ]
-
-        return arrIndividuals
-    }
 }
 
 export default Individual
