@@ -1,9 +1,6 @@
 import express from 'express'
 const individualRoutes = express.Router();
 import { controllerIndividuals } from "../controllers/individual/controllerIndividuals.js";
-//import { createIndividual } from "../controllers/individual/controllerIndividuals.js"
-import { list } from '../controllers/individual/index.js';
-import { v4 as uuidv4 } from 'uuid'
 
 const verifyIfExistsIndividualCPF = (req, res, next) => {
     //desestruturação atraves do headers para obter o cpf do cliente
