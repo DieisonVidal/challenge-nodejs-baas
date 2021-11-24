@@ -1,10 +1,9 @@
 import express from 'express'
 const individualRoutes = express.Router();
-import { getIndividuals } from "../controllers/individual/controllerIndividuals.js";
+import { controllerIndividuals } from "../controllers/individual/controllerIndividuals.js";
+//import { createIndividual } from "../controllers/individual/controllerIndividuals.js"
 import { list } from '../controllers/individual/index.js';
 import { v4 as uuidv4 } from 'uuid'
-
-const individuals = [];
 
 const verifyIfExistsIndividualCPF = (req, res, next) => {
     //desestruturação atraves do headers para obter o cpf do cliente
@@ -22,37 +21,9 @@ const verifyIfExistsIndividualCPF = (req, res, next) => {
     return next();
 }
 
-individualRoutes.post('/create', (req, res) => {
-    const { cpf } = req.body;
+individualRoutes.post('/create', controllerIndividuals.createIndividual);
 
-    const individualAlreadyExists = individuals.some(
-        (individual) => individual.cpf === cpf
-    );
-
-    if (individualAlreadyExists) {
-        res.status(400).json({ error: "Individual already exists!" })
-    } else {
-        const individual = ({
-            id: uuidv4(),
-            cpf,
-            created_at: new Date()
-        });
-
-        individuals.push(individual);
-        return res.status(201).json(individual); //json({sucess: 'Custumer created sucessfuly'});
-    }
-
-});
-
-individualRoutes.get('/show', getIndividuals);
-// individualRoutes.get('/show', verifyIfExistsIndividualCPF, (req, res) => {
-/* individualRoutes.get('/show', (request, response) => {
-    console.log(request.query)
-    console.log('chamou o show na rota...')
-    response.json(list());
-    // const { individual } = req;
-    // return res.json(individual);
-}); */
+individualRoutes.get('/show', controllerIndividuals.showIndividual);
 
 individualRoutes.get('/list', (req, res) => {
     return res.json(individuals);
