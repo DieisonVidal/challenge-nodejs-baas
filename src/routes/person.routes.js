@@ -1,8 +1,8 @@
 import express from 'express'
-const individualRoutes = express.Router();
-import { controllerIndividuals } from "../controllers/individual/controllerIndividuals.js";
+const personRoutes = express.Router();
+import { controllerPersons } from "../controllers/individual/controllerPersons.js";
 
-const verifyIfExistsIndividualCPF = (req, res, next) => {
+const verifyIfExistsPersonCPF = (req, res, next) => {
     //desestruturação atraves do headers para obter o cpf do cliente
     const { cpf } = req.headers;
 
@@ -18,12 +18,12 @@ const verifyIfExistsIndividualCPF = (req, res, next) => {
     return next();
 }
 
-individualRoutes.post('/create', controllerIndividuals.createIndividual);
+personRoutes.post('/create', controllerPersons.createPerson);
 
-individualRoutes.get('/show', controllerIndividuals.showIndividual);
+personRoutes.get('/show', controllerPersons.showPerson);
 
-individualRoutes.get('/list', (req, res) => {
+personRoutes.get('/list', (req, res) => {
     return res.json(individuals);
 });
 
-export default individualRoutes;
+export default personRoutes;

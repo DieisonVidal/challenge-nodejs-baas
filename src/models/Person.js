@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 
-class Individual {
+class Person {
     constructor(id, cpf, name, email, phone) {
 
         console.log('entrou no construtor')
@@ -14,4 +14,4 @@ class Individual {
 
 }
 
-export default Individual
+export default Person
