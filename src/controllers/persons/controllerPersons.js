@@ -2,7 +2,7 @@ import Person from "../../models/Person.js";
 import { v4 as uuidv4 } from 'uuid';
 
 
-const persons = [];
+export const persons = [];
 
 export const controllerPersons = {
 
@@ -14,7 +14,7 @@ export const controllerPersons = {
         );
 
         if (personAlreadyExists) {
-            response.status(400).json({ error: "person already exists!" })
+            response.status(400).json({ error: "Person already exists!" })
         } else {
 
             //const person = new Person();
@@ -28,6 +28,16 @@ export const controllerPersons = {
             return response.status(201).json(person); //json({sucess: 'Custumer created sucessfuly'});
         }
     },
+
+    listPersons(require, response){
+        if (persons == null || persons == "") {
+            return response.json({error: "Persons not found!"})
+        }
+        else{
+            return response.json(persons);
+        }
+    },
+    
     showPerson(require, response){
         const arrPersons = [
             { name: 'Dieison', age: 14 },
