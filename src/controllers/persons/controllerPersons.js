@@ -6,8 +6,8 @@ export const persons = [];
 
 export const controllerPersons = {
 
-    createPerson(require, response){
-        const { cpf } = require.body;
+    createPerson(request, response){
+        const { cpf } = request.body;
 
         const personAlreadyExists = persons.some(
             (person) => person.cpf === cpf
@@ -19,17 +19,17 @@ export const controllerPersons = {
 
             //const person = new Person();
             const person = ({
-                id: uuidv4(),
+                person_id: uuidv4(),
                 cpf,
                 created_at: new Date()
             });
 
             persons.push(person);
-            return response.status(201).json(person); //json({sucess: 'Custumer created sucessfuly'});
+            return response.status(201).json(person); 
         }
     },
 
-    listPersons(require, response){
+    listPersons(request, response){
         if (persons == null || persons == "") {
             return response.json({error: "Persons not found!"})
         }
@@ -37,13 +37,9 @@ export const controllerPersons = {
             return response.json(persons);
         }
     },
-    
-    showPerson(require, response){
-        const arrPersons = [
-            { name: 'Dieison', age: 14 },
-            { name: 'Jonathan', age: 14.001 }
-        ];
-    
-        response.json(arrPersons);
+
+    showPersonByCPF(request, response){
+        const { person } = request;    
+        response.json(person);
     }
 }

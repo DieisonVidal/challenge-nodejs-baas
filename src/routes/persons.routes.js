@@ -7,6 +7,6 @@ personsRoutes.post('/create', controllerPersons.createPerson);
 
 personsRoutes.get('/list', controllerPersons.listPersons);
 
-personsRoutes.get('/show/:id', verifyIfExistsPersonCPF,controllerPersons.showPerson);
+personsRoutes.get('/show', verifyIfExistsPersonCPF, controllerPersons.showPersonByCPF);
 
 export default personsRoutes;
