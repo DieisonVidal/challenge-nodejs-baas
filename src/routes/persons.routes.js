@@ -1,9 +1,13 @@
-import express from 'express'
+import express, { request } from 'express'
 const personsRoutes = express.Router();
-import { controllerPersons } from "../controllers/persons/controllerPersons.js";
+import { controllerPersons, persons } from "../controllers/persons/controllerPersons.js";
 import { verifyIfExistsPersonCPF } from "../middleware/middlewareError.js"
 
-personsRoutes.post('/create', controllerPersons.createPerson);
+personsRoutes.post('/register', controllerPersons.createPerson);
+
+personsRoutes.post('/registers', verifyIfExistsPersonCPF, controllerPersons.registerPerson);
+
+personsRoutes.post('/document', controllerPersons.registerDocument);
 
 personsRoutes.get('/list', controllerPersons.listPersons);
 

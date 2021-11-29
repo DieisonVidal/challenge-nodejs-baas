@@ -14,19 +14,40 @@ export const controllerPersons = {
         );
 
         if (personAlreadyExists) {
-            response.status(400).json({ error: "Person already exists!" })
+            response.status(400).json({ error: "Person already exists!" });
         } else {
 
             //const person = new Person();
             const person = ({
                 person_id: uuidv4(),
                 cpf,
+                register_person: [],
                 created_at: new Date()
             });
 
             persons.push(person);
             return response.status(201).json(person); 
         }
+    },
+
+    registerPerson(request, response){
+        const { full_name, username, email, phone } = request.body;
+
+        const { person } = request;
+        
+        const register_person = ({
+            full_name, 
+            username,
+            email, 
+            phone
+        });
+
+        person.register_person.push(register_person);
+        return response.status(201).json(person);
+    },
+
+    registerDocument(request, response){
+
     },
 
     listPersons(request, response){

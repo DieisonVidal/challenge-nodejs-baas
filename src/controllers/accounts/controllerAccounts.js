@@ -31,7 +31,7 @@ export const controllerAccounts = {
     },
     
     listAccounts(request, response){
-
+        
     },
 
     showAccount(request, response){

@@ -7,5 +7,6 @@ import personsRoutes from '../routes/persons.routes.js'
 app.use(json());
 app.use('/person', personsRoutes);
 app.use('/account', accountsRoutes);
+//app.use('/auth', authRoutes);
 
 app.listen(3000, () => { console.log("Server is running!") });
