@@ -1,4 +1,5 @@
-import { v4 as uuidv4 } from "uuid";
+import mongoose from 'mongoose';
+import { v4 as uuidv4 } from 'uuid';
 
 class Person {
     constructor(id, cpf, name, email, phone) {

@@ -1,6 +1,6 @@
-import express, { request } from 'express'
+import express from 'express'
 const personsRoutes = express.Router();
-import { controllerPersons, persons } from "../controllers/persons/controllerPersons.js";
+import { controllerPersons } from "../controllers/persons/controllerPersons.js";
 import { verifyIfExistsPersonCPF } from "../middleware/middlewareError.js"
 
 personsRoutes.post('/register', controllerPersons.createPerson);

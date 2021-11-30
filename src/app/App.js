@@ -2,9 +2,15 @@ import { json } from 'express'
 import app from '../config/custom-express.js';
 import accountsRoutes from '../routes/accounts.routes.js';
 import personsRoutes from '../routes/persons.routes.js'
-// const registerIndividualRoutes = require('../routes/resgisterIndividual.routes');
+import bodyParser from 'body-parser'; 
+import mongoose from 'mongoose';
 
-app.use(json());
+mongoose.connect('mongodb://localhost:27017/challenge_baas',{
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+});
+
+app.use(bodyParser.json());
 app.use('/person', personsRoutes);
 app.use('/account', accountsRoutes);
 //app.use('/auth', authRoutes);
