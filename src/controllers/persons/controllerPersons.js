@@ -8,25 +8,33 @@ export const controllerPersons = {
 
     async createPerson(request, response) {
 
-        const { cpf, name, email, phone } = request.body;
-
-        try {
-            const person = new Person({
-                cpf,
-                name,
-                email,
-                phone
-            });
-
-            const data = await person.save();
-
-            if (data) {
-                return response.status(200).json({ succes: "Created successfully!" });
+        const { cpf, full_name, email, phone, username, password } = request.body;
+        const personAlreadyExists = persons.some(
+            (data) => data.cpf === cpf
+        );
+        if (personAlreadyExists) {
+           response.status(400).json({ error: "Person already exists!" });
+        } else {
+            try {
+                const person = new Person({
+                    cpf,
+                    full_name,
+                    email,
+                    phone,
+                    username,
+                    password
+                });
+                const data = await person.save();
+                
+                if (data) {
+                    return response.status(200).json({ succes: "Created successfully!" });
+                }
+            } catch (error) {
+                return response.status(400).json({ error });
             }
-
-        } catch (error) {
-            return response.status(400).json({ error });
         }
+
+        
 
         // const personAlreadyExists = persons.some(
         //     (person) => person.cpf === cpf
@@ -69,16 +77,31 @@ export const controllerPersons = {
 
     },
 
-    listPersons(request, response) {
-        if (persons == null || persons == "") {
+    async listPersons(request, response) {
+        try{
+            const people = await Person.find({});
+            response.json({people});
+        } catch (err) {
+            response.json({error: "People not found!"});
+        }
+        /* if (persons == null || persons == "") {
             return response.json({ error: "Persons not found!" })
         } else {
             return response.json(persons);
-        }
+        } */
     },
 
-    showPersonByCPF(request, response) {
-        const { person } = request;
-        response.json(person);
+    async showPersonByCPF(request, response) {
+        try{
+            const id_person = request.params.id;
+            console.log(id_person)
+            const person = await Person.findById(id_person);
+            
+            response.json({person});
+        } catch (err) {
+            response.json({error: "Person not found"})
+        }
+        /* onst { person } = request;
+        response.json(person); */
     }
 }

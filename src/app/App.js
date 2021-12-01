@@ -22,7 +22,6 @@ try {
     console.log('error -> ', error)
 }
 
-
 app.use(bodyParser.json());
 app.use('/person', personsRoutes);
 app.use('/account', accountsRoutes);

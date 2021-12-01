@@ -11,6 +11,6 @@ personsRoutes
 
 personsRoutes
     .get('/list', controllerPersons.listPersons)
-    .get('/show', verifyIfExistsPersonCPF, controllerPersons.showPersonByCPF);
+    .get('/show/:id', verifyIfExistsPersonCPF, controllerPersons.showPersonByCPF);
 
 export default personsRoutes;
