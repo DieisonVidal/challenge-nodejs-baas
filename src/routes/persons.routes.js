@@ -6,11 +6,10 @@ import { verifyIfExistsPersonCPF } from "../middleware/middlewareError.js"
 
 personsRoutes
     .post('/register', controllerPersons.createPerson)
-    .post('/registers', verifyIfExistsPersonCPF, controllerPersons.registerPerson)
     .post('/document', controllerPersons.registerDocument)
 
 personsRoutes
     .get('/list', controllerPersons.listPersons)
-    .get('/show/:id', verifyIfExistsPersonCPF, controllerPersons.showPersonByCPF);
+    .get('/show', controllerPersons.showPersonByID);
 
 export default personsRoutes;

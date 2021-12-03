@@ -9,13 +9,17 @@ export const controllerPersons = {
     async createPerson(request, response) {
 
         const { cpf, full_name, email, phone, username, password } = request.body;
-        const personAlreadyExists = persons.some(
-            (data) => data.cpf === cpf
-        );
-        if (personAlreadyExists) {
-           response.status(400).json({ error: "Person already exists!" });
-        } else {
+        
+         {
             try {
+                const personAlreadyExists = await Person.findBy("cpf", cpf)
+                console.log(personAlreadyExists)
+                 if (!personAlreadyExists) {
+                response.status(400).json({ error: "Person already exists!" });
+                } else{ 
+
+                }
+
                 const person = new Person({
                     cpf,
                     full_name,
@@ -57,7 +61,7 @@ export const controllerPersons = {
         // }
     },
 
-    registerPerson(request, response) {
+   /*  registerPerson(request, response) {
         const { full_name, username, email, phone } = request.body;
 
         const { person } = request;
@@ -71,7 +75,7 @@ export const controllerPersons = {
 
         person.register_person.push(register_person);
         return response.status(201).json(person);
-    },
+    }, */
 
     registerDocument(request, response) {
 
@@ -91,17 +95,15 @@ export const controllerPersons = {
         } */
     },
 
-    async showPersonByCPF(request, response) {
+    async showPersonByID(request, response) {
         try{
-            const id_person = request.params.id;
-            console.log(id_person)
-            const person = await Person.findById(id_person);
+            const { id } = request.query;
+           
+            const person = await Person.findById(id);
             
-            response.json({person});
+            response.json(person);
         } catch (err) {
             response.json({error: "Person not found"})
         }
-        /* onst { person } = request;
-        response.json(person); */
     }
 }
