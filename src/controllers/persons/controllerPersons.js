@@ -9,8 +9,7 @@ export const controllerPersons = {
     async createPerson(request, response) {
 
         const { cpf, full_name, email, phone, username, password } = request.body;
-        
-         {
+        {
             try {
                 const personAlreadyExists = await Person.findBy("cpf", cpf)
                 console.log(personAlreadyExists)
@@ -37,28 +36,20 @@ export const controllerPersons = {
                 return response.status(400).json({ error });
             }
         }
+    },
 
+    async updatePersonByID(request, response){
+        try{
+            const { id } = request.query;
         
-
-        // const personAlreadyExists = persons.some(
-        //     (person) => person.cpf === cpf
-        // );
-
-        // if (personAlreadyExists) {
-        //     response.status(400).json({ error: "Person already exists!" });
-        // } else {
-
-        //     //const person = new Person();
-        //     const person = ({
-        //         person_id: uuidv4(),
-        //         cpf,
-        //         register_person: [],
-        //         created_at: new Date()
-        //     });
-
-        //     persons.push(person);
-        //     return response.status(201).json(person); 
-        // }
+            const {full_name, username, email, phone} = request.body;
+           
+            const updatedPerson = await Person.findByIdAndUpdate(id, full_name, username, email, phone);
+            console.log(updatedPerson);
+            response.json(updatedPerson);
+        } catch(err) {
+            response.json({error: "Person not found"})
+        }
     },
 
    /*  registerPerson(request, response) {
@@ -88,11 +79,6 @@ export const controllerPersons = {
         } catch (err) {
             response.json({error: "People not found!"});
         }
-        /* if (persons == null || persons == "") {
-            return response.json({ error: "Persons not found!" })
-        } else {
-            return response.json(persons);
-        } */
     },
 
     async showPersonByID(request, response) {

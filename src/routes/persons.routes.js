@@ -10,6 +10,9 @@ personsRoutes
 
 personsRoutes
     .get('/list', controllerPersons.listPersons)
-    .get('/show', controllerPersons.showPersonByID);
+    .get('/show', controllerPersons.showPersonByID)
+
+personsRoutes
+    .put('/update', controllerPersons.updatePersonByID)
 
 export default personsRoutes;
