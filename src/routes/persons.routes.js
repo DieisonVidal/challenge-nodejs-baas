@@ -15,4 +15,7 @@ personsRoutes
 personsRoutes
     .put('/update', controllerPersons.updatePersonByID)
 
+personsRoutes
+    .delete('/delete', controllerPersons.deletePersonByID)
+
 export default personsRoutes;
