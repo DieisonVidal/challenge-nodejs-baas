@@ -7,6 +7,7 @@ import { verifyIfExistsPersonCPF } from "../middleware/middlewareError.js"
 personsRoutes
     .post('/register', controllerPersons.createPerson)
     .post('/document', controllerPersons.registerDocument)
+    .post('/auth', controllerPersons.authPerson)
 
 personsRoutes
     .get('/list', controllerPersons.listPersons)

@@ -1,4 +1,3 @@
-import { persons } from "../controllers/persons/controllerPersons.js";
 
 export const verifyIfExistsPersonCPF = (req, res, next) => {
     //desestruturação atraves do headers para obter o cpf do cliente
