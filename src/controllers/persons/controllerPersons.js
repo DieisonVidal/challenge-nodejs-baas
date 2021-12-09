@@ -104,8 +104,8 @@ export const controllerPersons = {
             const person = await Person.findById(id);
             console.log(person)
 
-            if(dataPerson.cpf && dataPerson.email && dataPerson.password === 
-                person.cpf && person.email && person.password){
+            if((dataPerson.cpf && dataPerson.email && dataPerson.password) ===
+                (person.cpf && person.email && person.password)){
                     console.log("é igual sa mizera")
             }
             else{

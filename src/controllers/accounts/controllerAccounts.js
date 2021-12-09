@@ -1,30 +1,32 @@
+import { ObjectId } from 'bson';
 import { v4 as uuidv4 } from 'uuid';
+import Account from '../../models/Account.js';
+import Person from '../../models/Person.js';
 
-export const accounts = []; 
 
 export const controllerAccounts = {
     
-    createAccount(request, response){
-        const { cpf } = request.body;
-        
-        const personAlreadyExists = persons.some(
-            (person) => person.cpf === cpf
-        );
+    async createAccount(request, response){
+        try {
+            const dataPerson = request.body;
 
-        if (personAlreadyExists) {
-            const accounts = ({
-                account_id: uuidv4(),
-                number_account: accountNumberGenerator(),
-                persons,
-                created_at: new Date()
-            });
-            /* return response.json({message: "funfo!"}) */
-            return response.json(accounts)
+            const person = await Person.findOne(dataPerson);
+            
+            if(!person) {
+                response.json({message: "Person not found"});
+            }
+            else {
+                const createAccount = await Account({
+                    number_account:accountNumberGenerator(), 
+                    person:person
+                });
+                console.log(createAccount);
+                response.json({message: "Person exists"});
+            }
         } 
-        else {
-            return response.status(400).json({error: "Person not found!"})
+        catch (err) {
+
         }
-        
     },
     
     listAccounts(request, response){

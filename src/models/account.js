@@ -1,9 +1,17 @@
+import { ObjectId } from 'bson';
 import mongoose from 'mongoose';
 
 const AccountModel = {
     number_account:{
-        type: String
+        type: Number
+    },
+    person:{
+        type: Array
+    },
+    statement:{
+        type: Array
     }
-    
 }
-// id_account, number_account, created_at...
+
+const Account = mongoose.model('Account', AccountModel);
+export default Account;

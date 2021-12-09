@@ -3,10 +3,13 @@ const accountsRoutes = express.Router();
 import { controllerAccounts } from '../controllers/accounts/controllerAccounts.js';
 import { verifyIfExistsPersonCPF } from '../middleware/middlewareError.js'
 
-accountsRoutes.post('/create', controllerAccounts.createAccount);
+accountsRoutes
+    .post('/create', controllerAccounts.createAccount);
 
-accountsRoutes.get('/list', controllerAccounts.listAccounts);
+accountsRoutes
+    .get('/list', controllerAccounts.listAccounts);
 
-accountsRoutes.get('/show', controllerAccounts.showAccount);
+accountsRoutes
+    .get('/show', controllerAccounts.showAccount);
 
 export default accountsRoutes;
