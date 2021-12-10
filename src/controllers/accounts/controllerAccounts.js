@@ -9,32 +9,63 @@ export const controllerAccounts = {
     async createAccount(request, response){
         try {
             const dataPerson = request.body;
+            const person = await Person.findOne(dataPerson); 
 
-            const person = await Person.findOne(dataPerson);
-            
             if(!person) {
-                response.json({message: "Person not found"});
+                response.status(400).json({error: "Person not found"});
             }
-            else {
-                const createAccount = await Account({
-                    number_account:accountNumberGenerator(), 
-                    person:person
-                });
-                console.log(createAccount);
-                response.json({message: "Person exists"});
+
+            const dataAccount = await Account.findOne({person: person});
+            if(dataAccount) {
+                return response.status(400).json({error: "This person already has an account"});
+                
             }
+            
+            const createAccount = await Account({
+                number_account:accountNumberGenerator(), 
+                person:person
+            });
+
+           
+                const accountPerson = await createAccount.save();
+                response.json({message: "Account created", accountPerson});
+        
+
         } 
         catch (err) {
-
+            response.json({error: "Error creating account"});
         }
     },
     
-    listAccounts(request, response){
-        
+    async listAccounts(request, response){
+        try{
+            const accounts = await Account.find();
+            const Accounts = accounts.map((person)=> {
+                return {
+                    account_id: person._id,
+                    number_account: person.number_account,
+                    person_id: person.person[0]._id,
+                    nome: person.person[0].full_name,
+                    cpf: person.person[0].cpf
+                }
+            });
+
+            response.json({Accounts})
+        }
+        catch{
+            response.json({error: "Error listing accounts"});
+        }
     },
 
-    showAccount(request, response){
-        
+    async showAccount(request, response){
+        try{
+            const cpf = request.boby;
+            const accountPerson = await Account.findOne({});
+            console.log(accountPerson)
+        }
+        catch{
+
+        }
     },
 
     

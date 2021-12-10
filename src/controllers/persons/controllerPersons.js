@@ -63,10 +63,6 @@ export const controllerPersons = {
         }
     },
 
-    registerDocument(request, response) {
-
-    },
-
     async listPersons(request, response) {
         try {
             const people = await Person.find({});
