@@ -8,6 +8,9 @@ const AccountModel = {
     person:{
         type: Array
     },
+    balance:{
+        type: Number
+    },
     statement:{
         type: Array
     }
