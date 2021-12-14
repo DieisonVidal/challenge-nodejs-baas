@@ -65,7 +65,6 @@ export const controllerAccounts = {
                 full_name: account.person[0].full_name,
                 email: account.person[0].email,
                 phone: account.person[0].phone,
-                balance: account.balance,
                 statement: account.statement 
             });
         }
@@ -74,7 +73,73 @@ export const controllerAccounts = {
         }
     },
 
+    async p2pService(request, response){
+        try{
+            const user = [{balance: 900}]
+            const data = request.body;
+            console.log(data)
+            const accountPerson = await Account.findOne(data)
+            console.log(accountPerson)
+            console.log(user[0].balance)
+            console.log(data.amount)
+
+
+            if(user[0].balance < data.amount){
+                console.log("tem como não")
+            } 
+            else {
+                console.log("tem como sim");
+                user[0].balance = user[0].balance - data.amount
+                console.log(user[0].balance)
+
+                accountPerson.balance = accountPerson.balance + data.amount
+                console.log(accountPerson)
+            }
+
+           /*  const Accounts = accountsPerson.map((person)=> {
+                return {
+                    account_id: person._id,
+                    number_account: person.number_account,
+                    person_id: person.person[0]._id,
+                    name: person.person[0].full_name,
+                    cpf: person.person[0].cpf,
+                    email: person.person[0].email,
+                    balance: person.balance
+                }
+            });
+            console.log(Accounts)
+            const account = Accounts.findOne()
+            console.log(account) */
+            /* if(data.cpf == Accounts.cpf && data.email == Accounts.email){
+                console.log("achou")
+            }
+ */
+        }
+        catch{
+
+        }
+    },
     
+    async balance(request, response){
+        try{
+            const  number_account  = request.query;
+            const account = await Account.findOne(number_account);
+
+            if(account){
+                response.status(200).json({
+                    account_id: account._id,
+                    number_account: account.number_account,
+                    balance: account.balance
+                })
+            }
+            else {
+                response.status(400).json({error: "Account not fount"});
+            }
+        }
+        catch{
+            response.status(400).json({error: "Account not fount"});
+        }
+    }
 };
 
 export function accountNumberGenerator(){
