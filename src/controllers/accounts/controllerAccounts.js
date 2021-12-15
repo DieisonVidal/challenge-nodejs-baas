@@ -95,28 +95,9 @@ export const controllerAccounts = {
                 accountPerson.balance = accountPerson.balance + data.amount
                 console.log(accountPerson)
             }
-
-           /*  const Accounts = accountsPerson.map((person)=> {
-                return {
-                    account_id: person._id,
-                    number_account: person.number_account,
-                    person_id: person.person[0]._id,
-                    name: person.person[0].full_name,
-                    cpf: person.person[0].cpf,
-                    email: person.person[0].email,
-                    balance: person.balance
-                }
-            });
-            console.log(Accounts)
-            const account = Accounts.findOne()
-            console.log(account) */
-            /* if(data.cpf == Accounts.cpf && data.email == Accounts.email){
-                console.log("achou")
-            }
- */
         }
         catch{
-
+            response.status(400).json({error: "Resquest failed"});
         }
     },
     
@@ -137,7 +118,7 @@ export const controllerAccounts = {
             }
         }
         catch{
-            response.status(400).json({error: "Account not fount"});
+            response.status(400).json({error: "Resquest failed"});
         }
     }
 };
