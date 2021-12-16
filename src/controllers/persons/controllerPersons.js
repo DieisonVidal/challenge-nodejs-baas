@@ -1,6 +1,7 @@
-import Person from "../../models/Person.js";
-import jwt from "jsonwebtoken";
+import Person from "../../models/Person.js"
+import jwt from "jsonwebtoken"
 import bcrypt from "bcrypt"
+import authConfig from "../../config/auth-config.js"
 
 
 export const controllerPersons = {
@@ -43,10 +44,10 @@ export const controllerPersons = {
 
             const updatedPerson = await Person.findByIdAndUpdate(id, dataPerson);
 
-            response.json(updatedPerson);
+            return response.json(updatedPerson);
         }
         catch (err) {
-            response.json({ error: "Person not found" });
+            return response.json({ error: "Person not found" });
         }
     },
 
@@ -55,20 +56,20 @@ export const controllerPersons = {
             const { id } = request.query;
             const deletedPerson = await Person.findByIdAndDelete(id);
 
-            response.json({ message: "Person deleted", deletedPerson });
+            return response.json({ message: "Person deleted", deletedPerson });
         }
         catch {
-            response.json({ error: "Person not found" });
+            return response.json({ error: "Person not found" });
         }
     },
 
     async listPersons(request, response) {
         try {
             const people = await Person.find({});
-            response.json({ people });
+            return response.json({ people });
         }
         catch (err) {
-            response.json({ error: "People not found!" });
+            return response.json({ error: "People not found!" });
         }
     },
 
@@ -77,37 +78,45 @@ export const controllerPersons = {
             const { id } = request.query;
             const person = await Person.findById(id);
 
-            response.json(person);
+            return response.json(person);
         }
         catch (err) {
-            response.json({ error: "Person not found" })
+            return response.json({ error: "Person not found" });
         }
     },
 
     async authPerson(request, response) {
         try {
             const { email, password } = request.body;
-            console.log(email)
-            const person = await Person.findOne({ email })
-            console.log(person)
-            if (person) {
-                response.status(200).json({})
+
+            const person = await Person.findOne({ email });
+            if (!person) {
+                return response.status(401).json({error: "Invalid data, please check your information"});
             }
 
+            const verifyPassword = await bcrypt.compare(password, person.password);
+            if(!verifyPassword){
+                return response.status(401).json({error: "Incorrect password"});
+            }
 
-            response.status(400).json({ error: "Person not found, check the data entered" })
+            const { id } = person;
+            const token = jwt.sign(
+                          {id}, 
+                          authConfig.secret, 
+                          { expiresIn: authConfig.expireIn }
+            );
 
-            /* const authPerson = person
-            .find(
-                person => person.cpf === cpf || 
-                person.email === email || 
-                person.password === password
-            ); */
-            /*  console.log(authPerson) */
-
+            return response.json({
+                person:{
+                    id: person._id,
+                    name: person.full_name,
+                    email
+                },
+                token_person: token,
+            });
         }
         catch (err) {
-
+            return response.status(401).send('Invalid login!'); 
         }
     }
 

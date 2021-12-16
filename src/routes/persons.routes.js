@@ -1,7 +1,7 @@
 import express from 'express'
 const personsRoutes = express.Router();
 import { controllerPersons } from "../controllers/persons/controllerPersons.js";
-import { verifyIfExistsPersonCPF } from "../middleware/middlewareError.js"
+import { verifyJWT } from "../middleware/middlewareError.js"
 
 
 personsRoutes
@@ -9,7 +9,7 @@ personsRoutes
     .post('/auth', controllerPersons.authPerson)
 
 personsRoutes
-    .get('/list', controllerPersons.listPersons)
+    .get('/list', verifyJWT, controllerPersons.listPersons)
     .get('/show', controllerPersons.showPersonByID)
 
 personsRoutes
