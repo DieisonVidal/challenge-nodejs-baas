@@ -1,7 +1,4 @@
+export const authConfig = {
+    "secret": "3797d812c8c00a9320190f729de9fb21"
+}
 
-const authConfig = {
-    secret: "mysecret",
-    expireIn: "120",
-};
-
-export default authConfig;

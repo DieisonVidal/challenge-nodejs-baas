@@ -1,7 +1,7 @@
 import Person from "../../models/Person.js"
 import jwt from "jsonwebtoken"
 import bcrypt from "bcrypt"
-import authConfig from "../../config/auth-config.js"
+import {authConfig} from "../../config/auth-config.js"
 
 
 export const controllerPersons = {
@@ -98,17 +98,17 @@ export const controllerPersons = {
             if(!verifyPassword){
                 return response.status(401).json({error: "Incorrect password"});
             }
-
-            const { id } = person;
+            /* onst authConfig = authconfig; */
+            /* const { id } = person; */
             const token = jwt.sign(
-                          {id}, 
+                          {id: person.id}, 
                           authConfig.secret, 
-                          { expiresIn: authConfig.expireIn }
+                          {expiresIn: "120",}
             );
 
             return response.json({
                 person:{
-                    id: person._id,
+                    id: person.id,
                     name: person.full_name,
                     email
                 },
