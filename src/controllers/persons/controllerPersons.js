@@ -65,8 +65,8 @@ export const controllerPersons = {
 
     async listPersons(request, response) {
         try {
-            const people = await Person.find({});
-            return response.json({ people });
+            const people = await Person.find();
+            return response.json(people);
         }
         catch (err) {
             return response.json({ error: "People not found!" });
@@ -98,13 +98,8 @@ export const controllerPersons = {
             if(!verifyPassword){
                 return response.status(401).json({error: "Incorrect password"});
             }
-            /* onst authConfig = authconfig; */
-            /* const { id } = person; */
-            const token = jwt.sign(
-                          {id: person.id}, 
-                          authConfig.secret, 
-                          {expiresIn: "120",}
-            );
+           
+            const { id } = person;
 
             return response.json({
                 person:{
@@ -112,7 +107,7 @@ export const controllerPersons = {
                     name: person.full_name,
                     email
                 },
-                token_person: token,
+                token_person: jwt.sign({ id }, authConfig.secret, {expiresIn: 1800})
             });
         }
         catch (err) {

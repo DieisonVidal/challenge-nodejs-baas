@@ -10,7 +10,7 @@ personsRoutes
     .post('/auth', controllerPersons.authPerson)
 
 personsRoutes
-    .get('/list', Authentication, controllerPersons.listPersons)
+    .get('/list', Authentication.verifyJWT, controllerPersons.listPersons)
     .get('/show', controllerPersons.showPersonByID)
 
 personsRoutes
