@@ -79,6 +79,7 @@ export const controllerAccounts = {
             console.log(request.personId)
             const deptorAccount = await Account.findOne({'person[0]._id': request.personId});
             console.log(deptorAccount)
+            
         }
         catch{
             response.status(400).json({error: "Resquest failed"});
