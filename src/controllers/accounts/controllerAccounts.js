@@ -75,26 +75,10 @@ export const controllerAccounts = {
 
     async p2pService(request, response){
         try{
-            const user = [{balance: 900}]
-            const data = request.body;
-            console.log(data)
-            const accountPerson = await Account.findOne(data)
-            console.log(accountPerson)
-            console.log(user[0].balance)
-            console.log(data.amount)
-
-
-            if(user[0].balance < data.amount){
-                console.log("tem como não")
-            } 
-            else {
-                console.log("tem como sim");
-                user[0].balance = user[0].balance - data.amount
-                console.log(user[0].balance)
-
-                accountPerson.balance = accountPerson.balance + data.amount
-                console.log(accountPerson)
-            }
+            const { number_account, amount } = request.body;
+            console.log(request.personId)
+            const deptorAccount = await Account.findOne({'person[0]._id': request.personId});
+            console.log(deptorAccount)
         }
         catch{
             response.status(400).json({error: "Resquest failed"});
