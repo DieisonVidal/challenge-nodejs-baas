@@ -107,7 +107,7 @@ export const controllerPersons = {
                     name: person.full_name,
                     email
                 },
-                token_person: jwt.sign({ id }, authConfig.secret, {expiresIn: 1800})
+                token_person: jwt.sign({ id }, authConfig.secret, {expiresIn: 3600})
             });
         }
         catch (err) {

@@ -6,7 +6,7 @@ const AccountModel = {
         type: Number
     },
     person:{
-        type: Array
+        type: Object
     },
     balance:{
         type: Number

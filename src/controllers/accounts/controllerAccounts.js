@@ -40,9 +40,9 @@ export const controllerAccounts = {
                 return {
                     account_id: person._id,
                     number_account: person.number_account,
-                    person_id: person.person[0]._id,
-                    name: person.person[0].full_name,
-                    cpf: person.person[0].cpf
+                    person_id: person.person._id,
+                    name: person.person.full_name,
+                    cpf: person.person.cpf
                 }
             });
 
@@ -61,10 +61,10 @@ export const controllerAccounts = {
             response.json({
                 account_id: account._id,
                 number_account: account.number_account,
-                person_id: account.person[0]._id,
-                full_name: account.person[0].full_name,
-                email: account.person[0].email,
-                phone: account.person[0].phone,
+                person_id: account.person._id,
+                full_name: account.person.full_name,
+                email: account.person.email,
+                phone: account.person.phone,
                 statement: account.statement 
             });
         }
@@ -77,9 +77,18 @@ export const controllerAccounts = {
         try{
             const { number_account, amount } = request.body;
             console.log(request.personId)
-            const deptorAccount = await Account.findOne({'person[0]._id': request.personId});
-            console.log(deptorAccount)
-            
+            /* const accounts = await Account.find(); */
+            const deptorAccount = await Account.find();
+
+            // console.log(deptorAccount);
+
+            const accounts = deptorAccount.find(account => 
+            request.personId === String(account.person._id)
+            );
+            console.log(accounts);
+
+            // console.log(deptorAccount)
+            response.status(200).json({ accounts });
         }
         catch{
             response.status(400).json({error: "Resquest failed"});
