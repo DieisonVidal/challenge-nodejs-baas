@@ -26,10 +26,10 @@ export const controllerAccounts = {
             });
            
             const accountPerson = await createAccount.save();
-            response.json({message: "Account created", accountPerson});
+            response.status(200).json({message: "Account created", accountPerson});
         } 
         catch (err) {
-            response.json({error: "Error creating account"});
+            response.status(400).json({error: "Error creating account"});
         }
     },
     
@@ -58,7 +58,7 @@ export const controllerAccounts = {
             const  number_account  = request.query;
             const account = await Account.findOne(number_account);
 
-            response.json({
+            response.satatu(200).json({
                 account_id: account._id,
                 number_account: account.number_account,
                 person_id: account.person._id,
@@ -75,20 +75,32 @@ export const controllerAccounts = {
 
     async p2pService(request, response){
         try{
+            const accounts = await Account.find();
+            const debtorAccount = accounts.find(account => request.personId === String(account.person._id));
+            /* console.log(debtorAccount); */
+
             const { number_account, amount } = request.body;
-            console.log(request.personId)
-            /* const accounts = await Account.find(); */
-            const deptorAccount = await Account.find();
+            const receiverAccount = await Account.findOne({number_account});
+            console.log(debtorAccount.balance);
+            console.log(receiverAccount.balance);
+            /* console.log(receiverAccount); */
+            if(!receiverAccount){
+                response.status(400).json({error: "Account not found. Check the data entered."});
+            }
+            
+            if(debtorAccount.balance < amount){
+                response.status(400).json({error: "Insufficient balance for transaction."});
+            }
 
-            // console.log(deptorAccount);
+            const { id: debtorAccountID } = debtorAccount;
+            const { id: receiverAccountID } = receiverAccount;
 
-            const accounts = deptorAccount.find(account => 
-            request.personId === String(account.person._id)
-            );
-            console.log(accounts);
+            await Account.findByIdAndUpdate(debtorAccountID,{$inc:{ balance: - amount},},);
+            await Account.findByIdAndUpdate(receiverAccountID,{$inc:{ balance: + amount},},);
+            console.log(debtorAccount.balance);
+            console.log(receiverAccount.balance);
 
-            // console.log(deptorAccount)
-            response.status(200).json({ accounts });
+            response.status(200).json({ message:"Successful transaction", balance: debtorAccount.balance});
         }
         catch{
             response.status(400).json({error: "Resquest failed"});

@@ -101,7 +101,7 @@ export const controllerPersons = {
            
             const { id } = person;
 
-            return response.json({
+            return response.status(200).json({
                 person:{
                     id: person.id,
                     name: person.full_name,

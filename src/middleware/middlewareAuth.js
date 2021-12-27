@@ -13,7 +13,8 @@ export const Authentication = {
 
         jwt.verify(token, authConfig.secret, function(err, decoded) {
           if (err) 
-            return response.status(500).json({ auth: false, message: 'Failed to authenticate token.' });
+            return response.status(500).json({ auth: false, 
+              message: 'Failed to authenticate token, expired time.' });
           // se tudo estiver ok, salva no request para uso posterior
           request.personId = decoded.id;
            
