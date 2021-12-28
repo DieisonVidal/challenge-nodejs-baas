@@ -73,17 +73,17 @@ export const controllerAccounts = {
         }
     },
 
-    async p2pService(request, response){
+    /* async p2pService(request, response){
         try{
             const accounts = await Account.find();
             const debtorAccount = accounts.find(account => request.personId === String(account.person._id));
-            /* console.log(debtorAccount); */
+           
 
             const { number_account, amount } = request.body;
             const receiverAccount = await Account.findOne({number_account});
             console.log(debtorAccount.balance);
             console.log(receiverAccount.balance);
-            /* console.log(receiverAccount); */
+            
             if(!receiverAccount){
                 response.status(400).json({error: "Account not found. Check the data entered."});
             }
@@ -105,7 +105,7 @@ export const controllerAccounts = {
         catch{
             response.status(400).json({error: "Resquest failed"});
         }
-    },
+    }, */
     
     async balance(request, response){
         try{
