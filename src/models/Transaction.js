@@ -6,7 +6,7 @@ const TransactionModel = {
         type: Object,
         required: true
     },
-    id_debtor: {
+    debtor_account_id: {
         type: String,
         required: true
     },
@@ -16,6 +16,10 @@ const TransactionModel = {
     },
     amount: {
         type: Number,
+        required: true
+    },
+    date: {
+        type: Date,
         required: true
     }
 }
