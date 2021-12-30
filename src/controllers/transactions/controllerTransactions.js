@@ -1,5 +1,6 @@
 import Transaction from "../../models/Transaction.js";
 import Account from '../../models/Account.js';
+import DateFns, { getDate } from 'date-fns'
 
 
 export const controllerTransactions = {
@@ -41,7 +42,7 @@ export const controllerTransactions = {
                 debtor_account_id: debtorAccountID,
                 type: type,
                 amount: amount,
-                date: new Date
+                date: new Date()
             }).save();
             console.log(debtorAccount.balance);
             console.log(receiverAccount.balance);
@@ -56,15 +57,32 @@ export const controllerTransactions = {
 
     async listTransaction(request, response){
         try{
-            const data = request.query;
-            console.log(data)
-            const transactions = await Transaction.find(data);
-            console.log(transactions)
+            const {debtor_account_id, type, date} = request.query;
+            
+            console.log(debtor_account_id)
+            if(debtor_account_id){
+                const transactions = await Transaction.find({debtor_account_id});
+                response.status(200).json({transactions});
+            }
+            console.log(type)
+            if(type){
+                const transactions = await Transaction.find({type});
+                response.status(200).json({transactions});
+            }
+            console.log(date)
+            if(date){               
+                const data = {
+                    $gte: DateFns.startOfDay(new Date(date)),
+                    $lte: DateFns.endOfDay(new Date(date))
+                }
+                const transactions = await Transaction.find({date:data});
+                response.status(200).json({transactions});
+            }
 
-            response.status(200).json({transactions});
+            response.status(400).json({error:"Check the parameters entered in the listing"})           
         }
         catch{
-            response.status(200).json({error: "Transfer listing failed"});
+            response.status(200).json({error:"Transfer listing failed"});
         }
     }
 };
