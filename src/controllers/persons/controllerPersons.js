@@ -25,14 +25,14 @@ export const controllerPersons = {
 
             if (!personAlreadyExists) {
                 const person = await dataPerson.save();
-                return response.status(200).json({ succes: "Created successfully!", person });
+                return response.status(200).json({ succes: "Record created successfully", person });
             } 
             else {
                 return response.status(400).json({ message: "Person already exists" });
             }
         }
-        catch (error) {
-            return response.status(400).json({ error });
+        catch (err) {
+            return response.status(400).json({ error:"Error in creating the record" });
         }
     },
 
@@ -44,10 +44,10 @@ export const controllerPersons = {
 
             const updatedPerson = await Person.findByIdAndUpdate(id, dataPerson);
 
-            return response.json(updatedPerson);
+            return response.status(200).json({message:"Updated data", updatedPerson});
         }
         catch (err) {
-            return response.json({ error: "Person not found" });
+            return response.status(404).json({ error: "Person not found" });
         }
     },
 
@@ -56,32 +56,34 @@ export const controllerPersons = {
             const { id } = request.query;
             const deletedPerson = await Person.findByIdAndDelete(id);
 
-            return response.json({ message: "Person deleted", deletedPerson });
+            return response.status(200).json({ message: "Person deleted", deletedPerson });
         }
-        catch {
-            return response.json({ error: "Person not found" });
+        catch (err) {
+            return response.status(404).json({ error: "Person not found" });
         }
     },
 
     async listPersons(request, response) {
         try {
             const people = await Person.find();
-            return response.json(people);
+            return response.status(200).json(people);
         }
         catch (err) {
-            return response.json({ error: "People not found!" });
+            return response.status(404).json({ error: "Record listing error" });
         }
     },
 
     async showPersonByID(request, response) {
         try {
+
             const { id } = request.query;
+
             const person = await Person.findById(id);
 
-            return response.json(person);
+            return response.status(200).json(person);
         }
         catch (err) {
-            return response.json({ error: "Person not found" });
+            return response.status(404).json({ error: "Person not found" });
         }
     },
 

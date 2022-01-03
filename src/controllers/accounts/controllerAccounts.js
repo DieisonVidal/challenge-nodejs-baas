@@ -10,8 +10,8 @@ export const controllerAccounts = {
             const dataPerson = request.body;
             const person = await Person.findOne(dataPerson); 
 
-            if(!person) {
-                response.status(400).json({error: "Person not found"});
+            if(!person || person === "") {
+                return response.status(400).json({error: "Person not found"});
             }
 
             const dataAccount = await Account.findOne({person: person});
@@ -26,10 +26,10 @@ export const controllerAccounts = {
             });
            
             const accountPerson = await createAccount.save();
-            response.status(200).json({message: "Account created", accountPerson});
+            return response.status(200).json({message: "Account created", accountPerson});
         } 
         catch (err) {
-            response.status(400).json({error: "Error creating account"});
+            return response.status(400).json({error: "Error creating account"});
         }
     },
     
@@ -46,10 +46,10 @@ export const controllerAccounts = {
                 }
             });
 
-            response.status(200).json({Accounts})
+            return response.status(200).json({Accounts})
         }
-        catch{
-            response.status(400).json({error: "Error listing accounts"});
+        catch (err) {
+            return response.status(400).json({error: "Error listing accounts"});
         }
     },
 
@@ -58,7 +58,7 @@ export const controllerAccounts = {
             const  number_account  = request.query;
             const account = await Account.findOne(number_account);
 
-            response.satatu(200).json({
+            return response.status(200).json({
                 account_id: account._id,
                 number_account: account.number_account,
                 person_id: account.person._id,
@@ -68,44 +68,10 @@ export const controllerAccounts = {
                 statement: account.statement 
             });
         }
-        catch{
-            response.status(400).json({error: "Account not found"});
+        catch (err) {
+            return response.status(400).json({error: "Account not found"});
         }
     },
-
-    /* async p2pService(request, response){
-        try{
-            const accounts = await Account.find();
-            const debtorAccount = accounts.find(account => request.personId === String(account.person._id));
-           
-
-            const { number_account, amount } = request.body;
-            const receiverAccount = await Account.findOne({number_account});
-            console.log(debtorAccount.balance);
-            console.log(receiverAccount.balance);
-            
-            if(!receiverAccount){
-                response.status(400).json({error: "Account not found. Check the data entered."});
-            }
-            
-            if(debtorAccount.balance < amount){
-                response.status(400).json({error: "Insufficient balance for transaction."});
-            }
-
-            const { id: debtorAccountID } = debtorAccount;
-            const { id: receiverAccountID } = receiverAccount;
-
-            await Account.findByIdAndUpdate(debtorAccountID,{$inc:{ balance: - amount},},);
-            await Account.findByIdAndUpdate(receiverAccountID,{$inc:{ balance: + amount},},);
-            console.log(debtorAccount.balance);
-            console.log(receiverAccount.balance);
-
-            response.status(200).json({ message:"Successful transaction", balance: debtorAccount.balance});
-        }
-        catch{
-            response.status(400).json({error: "Resquest failed"});
-        }
-    }, */
     
     async balance(request, response){
         try{
@@ -113,18 +79,29 @@ export const controllerAccounts = {
             const account = await Account.findOne(number_account);
 
             if(account){
-                response.status(200).json({
+                return response.status(200).json({
                     account_id: account._id,
                     number_account: account.number_account,
                     balance: account.balance
                 })
             }
             else {
-                response.status(400).json({error: "Account not fount"});
+                return response.status(400).json({error: "Account not fount"});
             }
         }
-        catch{
-            response.status(400).json({error: "Resquest failed"});
+        catch (err) {
+            return response.status(400).json({error: "Resquest failed"});
+        }
+    },
+
+    async deleteAccount(request, response){
+        try{
+            const { id } = request.query;
+
+            
+        }
+        catch (err) {
+            return response.status(400).json({})
         }
     }
 };

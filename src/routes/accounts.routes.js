@@ -11,8 +11,7 @@ accountsRoutes
     .get('/show', controllerAccounts.showAccount)
     .get('/balance', controllerAccounts.balance)
 
-/* accountsRoutes
-    .put('/p2p', Authentication.verifyJWT, controllerAccounts.p2pService) */
-    
-
+accountsRoutes
+    .delete('/delete', controllerAccounts.deleteAccount)
+  
 export default accountsRoutes;
