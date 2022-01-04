@@ -68,7 +68,6 @@ export const controllerTransactions = {
             }
             
             if(date){  
-                
                 const gte = DateFns.addHours(new Date(date), 3)
                
                 const data = {
