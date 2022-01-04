@@ -1,6 +1,6 @@
 import Transaction from "../../models/Transaction.js";
 import Account from '../../models/Account.js';
-import DateFns, { getDate } from 'date-fns'
+import DateFns from 'date-fns'
 
 
 export const controllerTransactions = {
@@ -67,11 +67,15 @@ export const controllerTransactions = {
                 return response.status(200).json({transactions});
             }
             
-            if(date){      
+            if(date){  
+                
+                const gte = DateFns.addHours(new Date(date), 3)
+               
                 const data = {
-                    $gte: DateFns.startOfDay(new Date(date)),
-                    $lte: DateFns.endOfDay(new Date(date))
+                    $gte: DateFns.subHours(DateFns.startOfDay(gte), 3),
+                    $lte: DateFns.subHours(DateFns.endOfDay(gte), 3)
                 }
+                console.log(data)
                 const transactions = await Transaction.find({date:data});
                 return response.status(200).json({transactions});
             }

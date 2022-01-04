@@ -98,7 +98,6 @@ export const controllerAccounts = {
         try{
             const { id } = request.query;
 
-            
         }
         catch (err) {
             return response.status(400).json({})
