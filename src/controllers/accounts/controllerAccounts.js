@@ -75,22 +75,27 @@ export const controllerAccounts = {
     
     async balance(request, response){
         try{
-            const  number_account  = request.query;
-            const account = await Account.findOne(number_account);
+            const  {number_account, account_id}  = request.query;
 
-            if(account){
+            if(number_account){
+                const account = await Account.findOne({number_account});
                 return response.status(200).json({
                     account_id: account._id,
                     number_account: account.number_account,
                     balance: account.balance
-                })
+                });
             }
-            else {
-                return response.status(400).json({error: "Account not fount"});
+            if(account_id){
+                const account = await Account.findById(account_id);
+                return response.status(200).json({
+                    account_id: account._id,
+                    number_account: account.number_account,
+                    balance: account.balance
+                });
             }
         }
         catch (err) {
-            return response.status(400).json({error: "Resquest failed"});
+            return response.status(400).json({error: "Account not found"});
         }
     },
 
