@@ -4,8 +4,7 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "start": "nodemon src/server.js",
-        "docs": "npx apidoc -i src/config/apidoc/ -o docs/"
+        "start": "nodemon src/server.js"
     },
     "type": "module",
     "keywords": [],
