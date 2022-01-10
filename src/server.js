@@ -2,6 +2,7 @@ import app from './app/app.js';
 import accountsRoutes from './routes/accounts.routes.js';
 import personsRoutes from './routes/persons.routes.js'
 import transactionsRoutes from './routes/transactions.routes.js';
+import adminsRoutes from './routes/admins.routes.js'
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 
@@ -19,6 +20,7 @@ catch (error) {
 app.use(bodyParser.json());
 app.use('/person', personsRoutes);
 app.use('/account', accountsRoutes);
-app.use('/transactions', transactionsRoutes)
+app.use('/admin', adminsRoutes)
+app.use('/transactions', transactionsRoutes);
 
 app.listen(3000, () => { console.log("Server is running!") });

@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken"
 import { authConfig } from "../config/auth-config.js";
 
 export const Authentication = {
+  
   async verifyJWT(request, response, next) {
     try{
         const authHeader = request.headers.authorization;
