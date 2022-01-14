@@ -1,8 +1,6 @@
 import mongoose from 'mongoose';
-/* import {AdminRules} from '../rules/adminRules.js'
-
-const ADMIN = AdminRules.getRules(); */
-
+import {AdminRules} from '../rules/adminRules.js' 
+const ADMIN = new AdminRules().getRules()
 
 const AdminModel = {
     name:{
@@ -16,7 +14,7 @@ const AdminModel = {
     },
     role:{
         type: String,
-        /* enum: [ADMIN] */
+        default: [ADMIN]
     } 
 }
 

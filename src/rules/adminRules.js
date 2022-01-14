@@ -1,4 +1,4 @@
-class AdminRules {
+export class AdminRules {
     constructor() {
       this.rules = {
         ADMIN: 'admin'
@@ -15,4 +15,4 @@ class AdminRules {
       }
     }
   }
-  export default AdminRules;
+ 

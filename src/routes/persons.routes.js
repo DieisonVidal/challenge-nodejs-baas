@@ -1,22 +1,19 @@
 import express from 'express'
 const personsRoutes = express.Router();
-import { controllerPersons } from "../controllers/persons/controllerPersons.js";
+import { personsController } from "../controllers/personsController.js";
 import { Authentication } from "../middleware/middlewareAuth.js"
 
 
 
 personsRoutes
-    .post('/register', controllerPersons.createPerson)
-    .post('/auth', controllerPersons.authPerson)
+    .post('/register', personsController.createPerson)
+    .post('/auth', personsController.authPerson)
 
 personsRoutes
-    .get('/list', Authentication.verifyJWT, controllerPersons.listPersons)
-    .get('/show', controllerPersons.showPersonByID)
+    .get('/show', personsController.showPersonByID)
 
 personsRoutes
-    .put('/update', controllerPersons.updatePersonByID)
+    .put('/update', personsController.updatePersonByID)
 
-personsRoutes
-    .delete('/delete', controllerPersons.deletePersonByID)
 
 export default personsRoutes;

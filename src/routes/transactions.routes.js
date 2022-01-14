@@ -1,12 +1,12 @@
 import express from 'express';
 const transactionsRoutes = express.Router();
-import { controllerTransactions } from '../controllers/transactions/controllerTransactions.js';
+import { transactionsController } from '../controllers/transactionsController.js';
 import { Authentication } from '../middleware/middlewareAuth.js';
 
 transactionsRoutes
-    .post('/P2P', Authentication.verifyJWT,controllerTransactions.transactionP2P);
+    .post('/P2P', Authentication.verifyJWT,transactionsController.transactionP2P);
 
 transactionsRoutes
-    .get('/list-transaction', controllerTransactions.listTransaction);
+    .get('/list-transaction', transactionsController.listTransaction);
 
 export default transactionsRoutes;

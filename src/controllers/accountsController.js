@@ -1,9 +1,9 @@
 import { v4 as uuidv4 } from 'uuid';
-import Account from '../../models/Account.js';
-import Person from '../../models/Person.js';
+import Account from '../models/Account.js';
+import Person from '../models/Person.js';
 
 
-export const controllerAccounts = {
+export const accountsController = {
     
     async createAccount(request, response){
         try {

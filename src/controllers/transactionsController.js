@@ -1,9 +1,9 @@
-import Transaction from "../../models/Transaction.js";
-import Account from '../../models/Account.js';
+import Transaction from "../models/Transaction.js";
+import Account from '../models/Account.js';
 import DateFns from 'date-fns'
 
 
-export const controllerTransactions = {
+export const transactionsController = {
     async transactionP2P(request, response){
         try{
             // Debtor account

@@ -1,17 +1,20 @@
 import express from 'express';
 const accountsRoutes = express.Router();
-import { controllerAccounts } from '../controllers/accounts/controllerAccounts.js';
+import { accountsController } from '../controllers/accountsController.js';
 import { Authentication } from '../middleware/middlewareAuth.js';
-
+    
+    //Accounts POST
 accountsRoutes
-    .post('/create', controllerAccounts.createAccount)
-
+    .post('/create', accountsController.createAccount)
+    
+    //Accounts GET
 accountsRoutes
-    .get('/list', controllerAccounts.listAccounts)
-    .get('/show', controllerAccounts.showAccount)
-    .get('/balance', controllerAccounts.balance)
+    .get('/list', accountsController.listAccounts)
+    .get('/show', accountsController.showAccount)
+    .get('/balance', accountsController.balance)
 
+    //Accounts DELETE
 accountsRoutes
-    .delete('/delete', controllerAccounts.deleteAccount)
+    .delete('/delete', accountsController.deleteAccount)
   
 export default accountsRoutes;
