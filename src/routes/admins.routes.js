@@ -4,15 +4,17 @@ import {adminsController} from '../controllers/adminsController.js'
 import {personsController} from '../controllers/personsController.js';
 import {accountsController} from '../controllers/accountsController.js'
 
-    //Admins POST
+    
 adminsRoutes
+    //Admins POST
     .post('/create', adminsController.createAdmin)
     .post('/auth', adminsController.authAdmin)
     //Admins GET
     .get('/list', adminsController.listAdmins)
 
-    //Person GET
+    
 adminsRoutes
+    //Person GET
     .get('/list-persons', personsController.listPersons)
     .get('/show-person', personsController.showPersonByID)
     //Persons PUT
@@ -20,8 +22,13 @@ adminsRoutes
     //Persons DELETE
     .delete('/delete-person', personsController.deletePersonByID)
 
-    //Accounts GET
+    
 adminsRoutes
+    //Accounts GET
     .get('/list-accounts', accountsController.listAccounts)
+    .get('/show-account', accountsController.showAccount)
+    //Persons DELETE
+    .delete('/delete-account', accountsController.deleteAccount)
+
 
 export default adminsRoutes

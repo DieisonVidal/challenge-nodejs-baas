@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import Account from '../models/Account.js';
 import Person from '../models/Person.js';
+import { accountService } from '../services/accountService.js';
 
 
 export const accountsController = {
@@ -8,68 +9,37 @@ export const accountsController = {
     async createAccount(request, response){
         try {
             const dataPerson = request.body;
-            const person = await Person.findOne(dataPerson); 
 
-            if(!person || person === "") {
-                return response.status(400).json({error: "Person not found"});
-            }
+            const accountPerson = await accountService.create(dataPerson)
 
-            const dataAccount = await Account.findOne({person: person});
-            if(dataAccount) {
-                return response.status(400).json({error: "This person already has an account"});
-            }
-            
-            const createAccount = await Account({
-                number_account:accountNumberGenerator(), 
-                person:person,
-                balance: 0
-            });
-           
-            const accountPerson = await createAccount.save();
             return response.status(200).json({message: "Account created", accountPerson});
         } 
         catch (err) {
-            return response.status(400).json({error: "Error creating account"});
+            return response.status(400).json(err);
         }
     },
     
     async listAccounts(request, response){
         try{
-            const accounts = await Account.find();
-            const Accounts = accounts.map((person)=> {
-                return {
-                    account_id: person._id,
-                    number_account: person.number_account,
-                    person_id: person.person._id,
-                    name: person.person.full_name,
-                    cpf: person.person.cpf
-                }
-            });
+            const Accounts = await accountService.list()
 
             return response.status(200).json({Accounts})
         }
         catch (err) {
-            return response.status(400).json({error: "Error listing accounts"});
+            return response.status(400).json(err);
         }
     },
 
     async showAccount(request, response){
         try{
             const  number_account  = request.query;
-            const account = await Account.findOne(number_account);
 
-            return response.status(200).json({
-                account_id: account._id,
-                number_account: account.number_account,
-                person_id: account.person._id,
-                full_name: account.person.full_name,
-                email: account.person.email,
-                phone: account.person.phone,
-                statement: account.statement 
-            });
+            const account = await accountService.show(number_account)
+
+            return response.status(200).json(account);
         }
         catch (err) {
-            return response.status(400).json({error: "Account not found"});
+            return response.status(400).json(err);
         }
     },
     
@@ -77,35 +47,26 @@ export const accountsController = {
         try{
             const  {number_account, account_id}  = request.query;
 
-            if(number_account){
-                const account = await Account.findOne({number_account});
-                return response.status(200).json({
-                    account_id: account._id,
-                    number_account: account.number_account,
-                    balance: account.balance
-                });
-            }
-            if(account_id){
-                const account = await Account.findById(account_id);
-                return response.status(200).json({
-                    account_id: account._id,
-                    number_account: account.number_account,
-                    balance: account.balance
-                });
-            }
+            const balance = await accountService.balance(number_account, account_id);
+
+            return response.status(200).json(balance)
         }
         catch (err) {
-            return response.status(400).json({error: "Account not found"});
+            return response.status(400).json(err);
         }
     },
 
     async deleteAccount(request, response){
         try{
-            const { id } = request.query;
+            const { account_id } = request.query;
+
+            const accountDeleted = await accountService.delete(account_id);
+
+            return response.status(200).json({ message: "Account deleted", accountDeleted });
 
         }
         catch (err) {
-            return response.status(400).json({})
+            return response.status(400).json(err)
         }
     }
 };

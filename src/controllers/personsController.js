@@ -74,9 +74,9 @@ export const personsController = {
 
     async authPerson(request, response) {
         try {
-            const { email, password } = request.body;
+            const { cpf, email, password } = request.body;
 
-            const authPerson = await personsService.auth(email, password);
+            const authPerson = await personsService.auth(cpf, email, password);
 
             return response.status(200).json(authPerson);
         }

@@ -48,6 +48,9 @@ export const personsService = {
     async show(id){
         const person = await Person.findById(id);
 
+        if(!person)
+            throw {error: "Person not found"}
+
         const dataResult = {
             person_id: person.id,
             cpf: person.cpf,
@@ -69,8 +72,8 @@ export const personsService = {
         return deletedPerson;
     },
 
-    async auth(email, password){
-        const person = await Person.findOne({ email });
+    async auth(cpf, email, password){
+        const person = await Person.findOne({ cpf });
 
         if (!person) 
            throw {error: "Invalid data, please check your information"};
@@ -85,7 +88,7 @@ export const personsService = {
             person:{
                 id: person.id,
                 name: person.full_name,
-                email
+                cpf
             },
             token_person: jwt.sign({ id }, authConfig.secret, {expiresIn: 3600})
         };
