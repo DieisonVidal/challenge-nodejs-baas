@@ -1,7 +1,3 @@
-import Person from "../models/Person.js"
-import jwt from "jsonwebtoken"
-import bcrypt from "bcrypt"
-import {authConfig} from "../config/auth-config.js"
 import {personsService} from "../services/personsService.js"
 
 

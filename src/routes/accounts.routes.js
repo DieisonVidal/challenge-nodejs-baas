@@ -9,12 +9,8 @@ accountsRoutes
     
     //Accounts GET
 accountsRoutes
-    .get('/list', accountsController.listAccounts)
-    .get('/show', accountsController.showAccount)
-    .get('/balance', accountsController.balance)
+    .get('/show', Authentication.verifyJWT, accountsController.showAccount)
+    .get('/balance', Authentication.verifyJWT, accountsController.balance)
 
-    //Accounts DELETE
-accountsRoutes
-    .delete('/delete', accountsController.deleteAccount)
   
 export default accountsRoutes;

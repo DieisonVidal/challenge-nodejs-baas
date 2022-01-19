@@ -9,9 +9,9 @@ export const adminsController = {
     async createAdmin(request,response){
         try{
             const data = request.body;
-           /*  console.log(data) */
+         
             const dataAdmin = await adminService.create(data)
-            /* console.log(dataAdmin) */
+      
             return response.status(200).json(dataAdmin)
 
         }
@@ -22,33 +22,14 @@ export const adminsController = {
 
     async authAdmin(request, response){
         try {
-            const { name, email, password } = request.body;
+            const { email, password } = request.body;
 
-            const admin = await Admin.findOne({ email });
-            console.log(admin)
-            if (!admin) {
-                return response.status(401).json({error: "Invalid data, please check your information"});
-            }
-            
-            const verifyPassword = await bcrypt.compare(password, admin.password);
-            if(!verifyPassword){
-                return response.status(401).json({error: "Incorrect password"});
-            }
-           
-            const { id } = admin;
-            console.log(id)
+            const authAdmin = await adminService.authAdmin(email, password);
 
-            return response.status(200).json({
-                admin:{
-                    id: admin.id,
-                    name: admin.name,
-                    email
-                },
-                token_admin: jwt.sign({ id }, authConfig.secret, {expiresIn: 3600})
-            });
+            return response.status(200).json(authAdmin);
         }
         catch (err) {
-            return response.status(401).send('Invalid login!'); 
+            return response.status(401).json(err); 
         }
     },
 

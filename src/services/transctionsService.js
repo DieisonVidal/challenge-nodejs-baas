@@ -59,7 +59,7 @@ export const transactionsService = {
                 $gte: DateFns.subHours(DateFns.startOfDay(gte), 3),
                 $lte: DateFns.subHours(DateFns.endOfDay(gte), 3)
             }
-            console.log(data)
+            
             const transactions = await Transaction.find({date:data});
             return transactions;
         }
