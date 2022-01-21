@@ -10,10 +10,9 @@ export const adminsController = {
         try{
             const data = request.body;
          
-            const dataAdmin = await adminService.create(data)
+            const dataAdmin = await adminService.create(data);
       
-            return response.status(200).json(dataAdmin)
-
+            return response.status(200).json(dataAdmin);
         }
         catch(err){
             return response.status(400).json(err);
@@ -36,6 +35,7 @@ export const adminsController = {
     async listAdmins(request,response){
         try {
             const admins = await adminService.list();
+
             return response.status(200).json(admins);
         }
         catch (err) {

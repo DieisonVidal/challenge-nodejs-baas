@@ -10,10 +10,10 @@ personsRoutes
     .post('/auth', personsController.authPerson)
 
 personsRoutes
-    .get('/show', personsController.showPersonByID)
+    .get('/show', Authentication.verifyJWT, personsController.showPersonByID)
 
 personsRoutes
-    .put('/update', personsController.updatePersonByID)
+    .put('/update', Authentication.verifyJWT, personsController.updatePersonByID)
 
 
 export default personsRoutes;

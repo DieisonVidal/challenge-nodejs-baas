@@ -24,7 +24,6 @@ export const adminService = {
 
     async authAdmin(email, password){
         const admin = await Admin.findOne({ email });
-        console.log(admin)
 
         if (!admin) 
            throw {error: "Invalid data, please check your information"};
@@ -45,7 +44,6 @@ export const adminService = {
             },
             token_admin: jwt.sign({ id }, authConfig.secret, {expiresIn: 3600})
         };
-        console.log(authAdmin)
 
         return authAdmin;
     },
