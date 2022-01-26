@@ -1,0 +1,60 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API challenge-baas",
+        "description": "This API aims to meet the proposed Baas rules",
+        "termsOfService": "http://localhost:3000/terms",
+        "contact": {
+            "email": "dieison.silva@liveonsolutions.com"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3000/v1",
+            "description": "API test"
+        }
+    ], 
+    "paths": {
+        "/admin/create": {
+            "post": {
+                "summary": "Admin registration",
+                "description": "This route is responsible for registering an administrator",
+                "tags": ["Admin"],
+                "requestBody": {
+                    "content": {
+                        "application/json":{
+                            "schema": {
+
+                            }
+                        }     
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Admin": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    },
+                    "role": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type":"string"
+                    } 
+                }
+            }
+        }
+    }
+}

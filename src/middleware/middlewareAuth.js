@@ -19,7 +19,7 @@ export const Authentication = {
           // se tudo estiver ok, salva no request para uso posterior
           request.personId = decoded.id;
            
-          /* console.log(request.personId)   */       
+          /* console.log(request.personId) */         
           next();
         });
     }
