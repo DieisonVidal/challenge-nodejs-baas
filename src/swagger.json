@@ -25,10 +25,29 @@
                     "content": {
                         "application/json":{
                             "schema": {
+                                "$ref": "#/components/schemas/Admin"
+                            },
+                            "examples": {
+                                "admin": {
+                                    "value": {
+                                        "name": "João Vitor Test",
+                                        "email": "joaovitor@test.com",
+                                        "password": "joaotest123",
+                                        "role": "admin"
+                                    }
+                                }
 
                             }
                         }     
                     }
+                },
+                "responses": {
+                    "400": {
+                        "description": "Admin already exists."
+                    },
+                    "200": {
+                        
+                    } 
                 }
             }
         }
