@@ -6,13 +6,14 @@ import {accountsController} from '../controllers/accountsController.js'
 import { transactionsController } from '../controllers/transactionsController.js';
 import { Authentication } from '../middleware/middlewareAuth.js';
 
+
 //Admins
 adminsRoutes
     //POST
     .post('/create', adminsController.createAdmin)
     .post('/auth', adminsController.authAdmin)
     //GET
-    .get('/list', Authentication.verifyJWT, adminsController.listAdmins)
+    .get('/list', adminsController.listAdmins)
 
 //Persons
 adminsRoutes

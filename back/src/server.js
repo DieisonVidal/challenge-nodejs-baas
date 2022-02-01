@@ -7,7 +7,7 @@ import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import swaggerUI from 'swagger-ui-express';
 import swaggerDocs from './swagger.json';
-
+import cors from 'cors';
 
 try {
     console.log('realizou a conexão com o mongodb')
@@ -21,10 +21,11 @@ catch (error) {
 };
 
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
+
 app.use(bodyParser.json());
 app.use('/person', personsRoutes);
 app.use('/account', accountsRoutes);
-app.use('/admin', adminsRoutes);
+app.use('/admin', cors(), adminsRoutes);
  
 app.use('/transactions', transactionsRoutes);
 

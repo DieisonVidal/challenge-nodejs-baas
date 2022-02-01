@@ -1,7 +1,3 @@
-import bcrypt from "bcrypt"
-import Admin from '../models/Admin.js'
-import {authConfig} from '../config/auth-config.js'
-import { AdminRules } from "../rules/adminRules.js";
 import  {adminService}  from "../services/adminService.js"
 
 
@@ -11,7 +7,7 @@ export const adminsController = {
             const data = request.body;
          
             const dataAdmin = await adminService.create(data);
-      
+            
             return response.status(200).json(dataAdmin);
         }
         catch(err){

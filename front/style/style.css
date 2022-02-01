@@ -1,0 +1,14 @@
+table, tr, td{
+    border: 1px solid;
+}
+table {
+    width: 50%;
+    border-radius: 3px;
+}
+tr > th{
+    background-color: rgb(224, 224, 224);
+}
+tr > td {
+    text-align: center;
+}
+
